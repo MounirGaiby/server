@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
 const cors = require("cors");
+const path = require("path");
 const {
   filterKeyName,
   filterBanques,
@@ -11,12 +12,6 @@ const { insertData } = require("../controllers/database");
 
 const router = express.Router();
 router.use(cors());
-
-router.get("/", (req, res) => {
-  console.log(req.query);
-  res.statusCode = 200;
-  res.send("Server");
-});
 
 const upload = multer();
 
@@ -51,6 +46,10 @@ router.post("/api/client", upload.array("fichiers[]"), async (req, res) => {
   let status = await insertData(data, req.files);
 
   res.send(status);
+});
+
+router.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
 module.exports = router;

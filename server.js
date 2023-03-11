@@ -4,6 +4,8 @@ const router = require("./routes/indexRouter");
 
 const app = express();
 
+app.use(express.static("public"));
+
 app.use(router);
 
 app.listen(port, () => {
